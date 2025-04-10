@@ -71,13 +71,33 @@ bool saveGIF(FIBITMAP* originalImage, QuadTreeNode* root, const std::string& out
     
     std::vector<std::string> frameFilenames;
     
-    std::string originalFrame = "frame_original.png";
-    frameFilenames.push_back(originalFrame);
-    FreeImage_Save(FIF_PNG, originalImage, originalFrame.c_str(), 0);
+    // buat nampilin frame original tapi di-disable biar ga ikut masuk frame originalnya
+    // std::string originalFrame = "frame_original.png";
+    // frameFilenames.push_back(originalFrame);
+    // FreeImage_Save(FIF_PNG, originalImage, originalFrame.c_str(), 0);
     
     for (int depth = 0; depth <= maxDepth; depth++) {
+        bool hasNonLeafAtThisDepth = false;
+
+        std::function<void(QuadTreeNode*, int)> checkNode =
+            [&](QuadTreeNode* node, int currentDepth) {
+                if (!node || node->isLeaf) return;
+                if (currentDepth == depth) hasNonLeafAtThisDepth = true;
+                else {
+                    checkNode(node->topLeft, currentDepth + 1);
+                    checkNode(node->topRight, currentDepth + 1);
+                    checkNode(node->bottomLeft, currentDepth + 1);
+                    checkNode(node->bottomRight, currentDepth + 1);
+                }
+            };
+
+        checkNode(root, 0);
+        if (!hasNonLeafAtThisDepth) {
+            std::cout << "Tidak ada node non-leaf pada depth " << depth << ", menghentikan frame di sini." << std::endl;
+            break;
+        }
+
         std::cout << "Membuat frame untuk kedalaman " << depth << "..." << std::endl;
-        
         FIBITMAP* frameBitmap = createFrameAtDepth(root, width, height, depth);
         if (!frameBitmap) {
             std::cerr << "Error: Gagal membuat frame untuk kedalaman " << depth << std::endl;
