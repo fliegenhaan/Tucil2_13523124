@@ -53,7 +53,7 @@ int main() {
     cout << "Masukkan alamat absolut gif (kosongkan untuk melewati): ";
     getline(cin, gifPath);
     
-    if (method < 0 || method > 4) {
+    if (method < 1 || method > 5) {
         cout << "Metode perhitungan error tidak valid! Menggunakan metode default (Variance)." << endl;
         method = 0;
     }
