@@ -31,7 +31,8 @@ int main() {
     cout << "1. Variance" << endl;
     cout << "2. MAD" << endl;
     cout << "3. Max Pixel Difference" << endl;
-    cout << "4. SSIM (Bonus)" << endl;
+    cout << "4. Entropy" << endl;
+    cout << "5. SSIM (Bonus)" << endl;
     cout << "Masukkan metode perhitungan error: ";
     cin >> method;
     
