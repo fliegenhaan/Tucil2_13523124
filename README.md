@@ -56,7 +56,7 @@ Proses pembagian dilakukan secara rekursif dan akan berhenti ketika blok memenuh
    ```
 ## Cara menjalankan Program
 ### Cara Kompilasi
-1. Kompilasi program dengan Windows (dengan MinGW) dan Linux
+1. Kompilasi program dengan Windows (dengan MinGW) atau Linux
 ```bash
 g++ -o bin/quadtree_compression src/*.cpp -I lib/FreeImage -L lib/FreeImage -lfreeimage
 ```
